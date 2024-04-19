@@ -1,0 +1,54 @@
+import random
+
+# List of words for the game
+words = ["apple", "banana", "orange", "grape", "pear", "pineapple"]
+
+def guess_the_word():
+    # Select a random word from the list
+    word = random.choice(words)
+    # Create a set to store the guessed letters
+    guessed_letters = set()
+    # Maximum number of attempts
+    max_attempts = 7
+    # Number of incorrect guesses
+    incorrect_guesses = 0
+    
+    print("Welcome to Guess the Word!")
+    print("Try to guess the word.")
+    print("The word contains", len(word), "letters.")
+    
+    # Game loop
+    while incorrect_guesses < max_attempts:
+        # Display the word with guessed letters revealed and unguessed letters replaced with underscores
+        display_word = "".join(letter if letter in guessed_letters else "_" for letter in word)
+        print("Word:", display_word)
+        
+        # Ask the player to guess a letter
+        guess = input("Guess a letter: ").lower()
+        
+        # Check if the guessed letter is in the word
+        if guess in word:
+            print("Correct guess!")
+            # Add the guessed letter to the set of guessed letters
+            guessed_letters.add(guess)
+            # Check if the player has guessed all the letters
+            if all(letter in guessed_letters for letter in word):
+                print("Congratulations! You've guessed the word correctly:", word)
+                break
+        else:
+            print("Incorrect guess!")
+            incorrect_guesses += 1
+            # Check if the player has used all their attempts
+            if incorrect_guesses == max_attempts:
+                print("Sorry, you've run out of attempts! The word was:", word)
+                break
+    
+    # Ask the player if they want to play again
+    play_again = input("Do you want to play again? (yes/no): ").lower()
+    if play_again == "yes":
+        guess_the_word()
+    else:
+        print("Thanks for playing!")
+
+# Start the game
+guess_the_word()
